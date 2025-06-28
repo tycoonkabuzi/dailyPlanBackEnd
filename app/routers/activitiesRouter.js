@@ -5,4 +5,7 @@ const activitiesSchema = require("../controllers/activitiesController");
 
 //routes will be here.
 router.get("/", activitiesSchema.index);
+router.post("/", activitiesSchema.addEvent);
+router.get("/day", activitiesSchema.setSingleActivity);
+router.delete("/", activitiesSchema.deleteActivity);
 module.exports = router;

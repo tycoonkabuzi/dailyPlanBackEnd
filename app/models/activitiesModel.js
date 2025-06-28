@@ -7,6 +7,7 @@ const eventSchema = new mongoose.Schema({
   date: String,
   timeLeft: String,
   emergencyLevel: String,
+  notes: String,
 });
 
 const activitiesSchema = new mongoose.Schema({
