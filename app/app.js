@@ -4,7 +4,14 @@ const cookieParser = require("cookie-parser");
 const app = express(); // assigning the module to a variable to be able to use it kind of creating an instance of that class.
 
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // frontend URL
+    credentials: true, // allow cookies
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  })
+);
+
 app.use(cookieParser());
 const PORT = process.env.PORT;
 const mongoose = require("mongoose"); // importing the module mongoose which is sort of our middle man between express and mongoDb Which is our database
@@ -14,11 +21,11 @@ app.use(express.json()); // without this the req.body cannot work
 // here we will import our routers
 const activitiesRouter = require("./routers/activitiesRouter");
 const usersRouter = require("./routers/usersRouter");
+const AuthMiddleware = require("./middleware/Auth");
 
 //routes
-app.use("/activities", activitiesRouter);
+app.use("/activities", AuthMiddleware, activitiesRouter);
 app.use("/users", usersRouter);
-
 app.listen(PORT, () => {
   console.log(`Server Started on port ${PORT} `);
 });
